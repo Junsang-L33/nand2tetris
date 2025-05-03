@@ -1,0 +1,28 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/1/Mux.hdl
+/** 
+ * Multiplexor:
+ * if (sel = 0) out = a, else out = b
+ */
+CHIP Mux {
+    IN a, b, sel;
+    OUT out;
+
+    PARTS:
+    //notSel = not(sel)
+    Nand(a=sel, b=sel, out=notSel);
+    //aAnd = a AND (Not sel)
+    Nand(a=a, b=notSel, out=t1);
+    Nand(a=t1, b=t1, out=aAnd);
+    //bAnd = b AND sel
+    Nand(a=b, b=sel, out=t2);
+    Nand(a=t2, b=t2, out=bAnd);
+    //out = aAnd OR bAnd = NOT(NOT aAnd AND NOT bAnd)
+    Nand(a=aAnd, b=aAnd, out=nota);
+    Nand(a=bAnd, b=bAnd, out=notb);
+    Nand(a=nota, b=notb, out=out);
+
+    //// Replace this comment with your code.
+}
